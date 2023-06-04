@@ -150,8 +150,8 @@ if ( ! class_exists( 'JobBoard\Job_Applicant_Custom_Fields' ) ) {
 		 * @return void.
 		 */
 		public function render_file_upload_field( $post, $meta_key, $field_label ) {
-			$file_id   = get_post_meta( $post->ID, $meta_key, true );
-			$file_url  = wp_get_attachment_url( $file_id );
+			$file_id  = get_post_meta( $post->ID, $meta_key, true );
+			$file_url = wp_get_attachment_url( $file_id );
 
 			?>
 			<div class="file-upload-field-wrapper">
@@ -170,18 +170,20 @@ if ( ! class_exists( 'JobBoard\Job_Applicant_Custom_Fields' ) ) {
 		 * Save the meta when the Job Applicant is saved.
 		 *
 		 * @param int $post_id The ID of the Job Applicant being saved.
+		 *
+		 * @return void
 		 */
 		public function save_meta( $post_id ) {
 			// Check if our nonce is set.
 			if ( ! isset( $_POST['jb_job_applicant_meta_box_nonce'] ) ) {
-				return $post_id;
+				return;
 			}
 
-			$nonce = $_POST['jb_job_applicant_meta_box_nonce'];
+			$nonce = sanitize_text_field( wp_unslash( $_POST['jb_job_applicant_meta_box_nonce'] ) );
 
 			// Verify that the nonce is valid.
 			if ( ! wp_verify_nonce( $nonce, 'jb_job_applicant_meta_box' ) ) {
-				return $post_id;
+				return;
 			}
 
 			/*
@@ -198,15 +200,11 @@ if ( ! class_exists( 'JobBoard\Job_Applicant_Custom_Fields' ) ) {
 			}
 
 			// Sanitize the user input.
-			$job_applied_id = isset( $_POST['jb_job_applicant_job_applied_id'] ) ? intval( ( $_POST['jb_job_applicant_job_applied_id'] ) ) : 0;
-			$email          = isset( $_POST['jb_job_applicant_email'] ) ? sanitize_email( wp_unslash( $_POST['jb_job_applicant_email'] ) ) : '';
-			$phone_number   = isset( $_POST['jb_job_applicant_phone_number'] ) ? sanitize_text_field( wp_unslash( $_POST['jb_job_applicant_phone_number'] ) ) : '';
-			$resume_file_id = isset( $_POST['jb_job_applicant_resume_attachment_id'] ) ? intval( $_POST['jb_job_applicant_resume_attachment_id'] ) : 0;
+			$job_applied_id       = isset( $_POST['jb_job_applicant_job_applied_id'] ) ? intval( ( $_POST['jb_job_applicant_job_applied_id'] ) ) : 0;
+			$email                = isset( $_POST['jb_job_applicant_email'] ) ? sanitize_email( wp_unslash( $_POST['jb_job_applicant_email'] ) ) : '';
+			$phone_number         = isset( $_POST['jb_job_applicant_phone_number'] ) ? sanitize_text_field( wp_unslash( $_POST['jb_job_applicant_phone_number'] ) ) : '';
+			$resume_file_id       = isset( $_POST['jb_job_applicant_resume_attachment_id'] ) ? intval( $_POST['jb_job_applicant_resume_attachment_id'] ) : 0;
 			$cover_letter_file_id = isset( $_POST['jb_job_applicant_cover_letter_attachment_id'] ) ? intval( $_POST['jb_job_applicant_cover_letter_attachment_id'] ) : 0;
-
-
-			// error_log( 'resume > '. $resume_file_id );
-			// error_log( 'cl > '. $cover_letter_file_id );
 
 			// Update the meta field.
 			$this->update_post_meta_custom( $post_id, 'jb_job_applicant_job_applied_id', $job_applied_id );
@@ -228,8 +226,6 @@ if ( ! class_exists( 'JobBoard\Job_Applicant_Custom_Fields' ) ) {
 		 */
 		public function update_post_meta_custom( $post_id, $meta_key, $meta_value ) {
 			if ( empty( $meta_value ) ) {
-				// error_log('in f meta_key > '. $meta_key);
-				// error_log('in f meta_value > '. $meta_value);
 				$result = ( false === delete_post_meta( $post_id, $meta_key ) ) ? false : 2;
 			} else {
 				$result = ( false === update_post_meta( $post_id, $meta_key, $meta_value ) ) ? false : 1;

@@ -82,7 +82,7 @@ if ( ! class_exists( 'JobBoard\Job_Applicant_List_Filter' ) ) {
 		 */
 		public function filter_job_applicants_by_job( $query ) {
 			global $pagenow, $wpdb;
-			$type      = 'post';
+
 			$post_type = isset( $_GET['post_type'] ) ? sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) : '';
 			$job_id    = isset( $_GET['jb_job_applicant_filter_by_job'] ) ? intval( $_GET['jb_job_applicant_filter_by_job'] ) : 0;
 

@@ -35,11 +35,6 @@ if ( ! class_exists( '\JobBoard\Init' ) ) {
 				require_once dirname( JOB_BOARD_PLUGIN_FILE ) . '/includes/job-applicant/admin/class-job-applicant-custom-fields.php';
 				require_once dirname( JOB_BOARD_PLUGIN_FILE ) . '/includes/job-applicant/admin/class-job-applicant-list-filter.php';
 			}
-
-			// Include files for frontend.
-			// if ( ! is_admin() ) {
-			// 	require_once dirname( JOB_BOARD_PLUGIN_FILE ) . '/includes/event-api/class-event-api.php';
-			// }
 		}
 	}
 }
