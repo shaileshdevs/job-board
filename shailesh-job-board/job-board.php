@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: Job Board
- * Plugin URI:
+ * Plugin Name: Shailesh Job Board
+ * Plugin URI: https://example.com
  * Description: The plugin can help you turn your website into Job Board.
  * Version: 1.0.0
  * Author: Shailesh

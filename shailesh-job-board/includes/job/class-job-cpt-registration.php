@@ -75,6 +75,7 @@ if ( ! class_exists( 'JobBoard\Job_CPT_Registration' ) ) {
 				'has_archive'        => true,
 				'hierarchical'       => false,
 				'menu_position'      => null,
+				'menu_icon'          => 'dashicons-clipboard',
 				'show_in_rest'       => true,
 				'supports'           => array( 'title', 'editor', 'revisions', 'author', 'custom-fields' ),
 				'taxonomies'         => array( 'job_location', 'job_department' ),

@@ -75,6 +75,7 @@ if ( ! class_exists( 'JobBoard\Job_Applicant_CPT_Registration' ) ) {
 				'has_archive'        => true,
 				'hierarchical'       => false,
 				'menu_position'      => null,
+				'menu_icon'          => 'dashicons-networking',
 				'show_in_rest'       => true,
 				'supports'           => array( 'title', 'editor', 'custom-fields' ),
 			);
